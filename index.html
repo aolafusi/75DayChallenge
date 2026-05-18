@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>75 SOLID — Demi's Challenge</title>
+<title>75 SOLID — Demi</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -11,162 +11,248 @@
   --bg:#05080a;--surface:#0a0f12;--surface2:#101820;
   --border:#1a2530;--border2:#243040;
   --text:#dde8f0;--muted:#3a5060;--muted2:#6a8090;
-  --red:#e03040;--red-dim:#e0304015;
-  --green:#20c060;--green-dim:#20c06015;
-  --gold:#d4a020;--gold2:#f0c040;--gold-dim:#d4a02015;
-  --blue:#2080c0;--orange:#e06020;
+  --red:#e03040;--red-dim:#e0304012;
+  --green:#20c060;--green-dim:#20c06012;
+  --gold:#d4a020;--gold2:#f0c040;--gold-dim:#d4a02012;
+  --blue:#2080c0;--blue-dim:#2080c012;
+  --purple:#8060d0;--purple-dim:#8060d012;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:13px;line-height:1.5;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;opacity:0.3;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")}
 
-/* GRAIN OVERLAY */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
-
-/* HEADER */
-header{position:relative;z-index:1;padding:28px 28px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:0}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.08em;color:#fff;line-height:1}
+/* ── HEADER ── */
+header{position:relative;z-index:1;padding:18px 20px 0;border-bottom:1px solid var(--border)}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:0.08em;color:#fff;line-height:1}
 .logo span{color:var(--gold2)}
-.logo-sub{font-size:10px;letter-spacing:0.2em;color:var(--muted2);text-transform:uppercase;margin-top:2px}
-.header-right{display:flex;align-items:center;gap:10px;padding-bottom:0}
-.streak-big{text-align:right}
-.streak-num{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--gold2);line-height:1}
-.streak-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted2)}
-nav{display:flex;width:100%;border-top:1px solid var(--border);margin-top:12px}
-nav button{flex:1;padding:10px 8px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Mono',monospace;transition:all 0.15s}
+.logo-sub{font-size:9px;letter-spacing:0.18em;color:var(--muted2);text-transform:uppercase;margin-top:1px}
+.streak-badge{text-align:right}
+.streak-num{font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--gold2);line-height:1}
+.streak-label{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2)}
+nav{display:flex;border-top:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex-shrink:0;padding:9px 13px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;transition:all 0.15s;white-space:nowrap}
 nav button.active{color:var(--gold2);border-bottom-color:var(--gold2)}
 nav button:hover:not(.active){color:var(--text)}
 
-main{position:relative;z-index:1;padding:24px;max-width:960px;margin:0 auto}
+main{position:relative;z-index:1;padding:18px 20px;max-width:720px;margin:0 auto}
 
-/* BUTTONS */
-.btn{padding:8px 16px;border-radius:4px;cursor:pointer;font-size:11px;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.15s;border:1px solid var(--border);background:transparent;color:var(--muted2)}
+/* ── BUTTONS ── */
+.btn{padding:7px 13px;border-radius:4px;cursor:pointer;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.15s;border:1px solid var(--border);background:transparent;color:var(--muted2)}
 .btn:hover{color:var(--text);border-color:var(--border2)}
 .btn.primary{background:var(--gold2);color:#000;font-weight:700;border-color:var(--gold2)}
 .btn.primary:hover{background:#fff;border-color:#fff}
 .btn.danger{color:var(--red);border-color:var(--red)33}
 .btn.danger:hover{background:var(--red-dim)}
-.btn.sm{padding:4px 10px;font-size:10px}
-.btn.lg{padding:12px 28px;font-size:13px}
+.btn.sm{padding:3px 9px;font-size:10px}
+.btn.lg{padding:11px 24px;font-size:12px;letter-spacing:0.1em}
 
-/* TODAY */
-.today-hero{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
-.today-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--red),var(--gold2))}
-.day-label{font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--border2);position:absolute;right:20px;top:10px;line-height:1;pointer-events:none;user-select:none}
-.today-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
-.today-date{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2)}
-.today-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-top:4px}
+/* ── INPUTS ── */
+.inp{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:7px 10px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;outline:none;transition:border-color 0.15s}
+.inp:focus{border-color:var(--gold)}
+select.inp option{background:var(--surface2)}
+textarea.inp{resize:vertical;min-height:70px}
 
-/* TASK ITEMS */
-.tasks{display:flex;flex-direction:column;gap:8px}
-.task{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:all 0.2s;user-select:none}
-.task:hover{border-color:var(--border2);background:var(--surface2)}
-.task.done{border-color:var(--green)33;background:var(--green-dim)}
+/* ── SECTION TITLE ── */
+.stitle{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+
+/* ── PROGRESS BAR ── */
+.pbar-wrap{margin-bottom:14px}
+.pbar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted2);margin-bottom:5px}
+.pbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.pbar-fill{height:100%;border-radius:2px;transition:width 0.5s ease}
+.pbar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.pbar-fill.green{background:var(--green)}
+.pbar-fill.red{background:var(--red)}
+
+/* ── MILESTONE BANNER ── */
+.milestone{background:linear-gradient(135deg,#150e00,#0a0800);border:1px solid var(--gold)55;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.milestone .mi{font-size:22px}
+.milestone .mt2{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold2);letter-spacing:0.08em}
+.milestone .ms{font-size:10px;color:var(--muted2);margin-top:1px}
+
+/* ── COMPLETE BANNER ── */
+.complete-banner{background:linear-gradient(135deg,#081508,#040a04);border:1px solid var(--green)44;border-radius:6px;padding:14px 18px;text-align:center;margin-bottom:12px}
+.complete-banner .big{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--green);letter-spacing:0.1em}
+.complete-banner p{color:var(--muted2);font-size:11px;margin-top:2px}
+
+/* ── SUNDAY BANNER ── */
+.sunday-banner{background:linear-gradient(135deg,#0a0818,#050510);border:1px solid var(--purple)44;border-radius:6px;padding:12px 16px;margin-bottom:12px}
+.sunday-banner .st{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--purple);letter-spacing:0.08em;margin-bottom:4px}
+.sunday-banner p{font-size:11px;color:var(--muted2);line-height:1.6}
+
+/* ── SCHEDULE CARD ── */
+.schedule-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.schedule-day{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.schedule-day:last-child{border-bottom:none}
+.sday-name{font-size:11px;font-weight:600;width:36px;flex-shrink:0;color:var(--muted2)}
+.sday-name.today-day{color:var(--gold2)}
+.sday-type{flex:1;font-size:11px}
+.sday-time{font-size:10px;color:var(--muted);flex-shrink:0}
+.sday-bed{font-size:10px;color:var(--blue);flex-shrink:0}
+.gym-before{color:var(--green)}.gym-after{color:var(--orange)}.gym-rest{color:var(--muted)}
+
+/* ── TASKS ── */
+.task-group-label{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin:12px 0 5px;padding-left:2px}
+.tasks{display:flex;flex-direction:column;gap:5px}
+.task-wrap{}
+.task{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:5px;cursor:pointer;transition:all 0.18s;user-select:none}
+.task:hover{border-color:var(--border2)}
+.task.done{border-color:var(--green)44;background:var(--green-dim)}
 .task.done .task-name{color:var(--green)}
-.task.pass-used{border-color:var(--gold)33;background:var(--gold-dim)}
-.task-check{width:22px;height:22px;border-radius:4px;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;font-size:13px}
-.task.done .task-check{border-color:var(--green);background:var(--green);color:#000}
-.task.pass-used .task-check{border-color:var(--gold);background:var(--gold);color:#000}
-.task-info{flex:1}
-.task-name{font-weight:500;font-size:13px;transition:color 0.2s}
-.task-desc{font-size:11px;color:var(--muted2);margin-top:1px}
-.task-icon{font-size:20px;flex-shrink:0}
+.task.pass-used{border-color:var(--gold)44;background:var(--gold-dim)}
+.task.pass-used .task-name{color:var(--gold2)}
+.chk{width:19px;height:19px;border-radius:3px;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.18s;font-size:10px}
+.task.done .chk{border-color:var(--green);background:var(--green);color:#000}
+.task.pass-used .chk{border-color:var(--gold);background:var(--gold);color:#000}
+.task-info{flex:1;min-width:0}
+.task-name{font-size:12px;font-weight:500;transition:color 0.18s}
+.task-sub{font-size:10px;color:var(--muted2);margin-top:1px}
+.task-icon{font-size:17px;flex-shrink:0}
+.task-expand-btn{font-size:10px;color:var(--muted);flex-shrink:0;background:none;border:none;cursor:pointer;font-family:inherit;padding:2px 4px;transition:color 0.15s}
+.task-expand-btn:hover{color:var(--text)}
 
-/* PASS */
-.pass-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--gold-dim);border:1px solid var(--gold)44;border-radius:6px;margin-top:8px}
-.pass-label{font-size:11px;color:var(--gold2);letter-spacing:0.08em}
-.pass-dots{display:flex;gap:6px}
-.pass-dot{width:10px;height:10px;border-radius:50%;background:var(--gold2);transition:all 0.2s}
-.pass-dot.used{background:var(--muted);opacity:0.4}
+.task-detail{padding:10px 13px;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 5px 5px;margin-top:-5px;margin-bottom:5px}
 
-/* COMPLETE BANNER */
-.complete-banner{background:linear-gradient(135deg,#0a1f10,#051008);border:1px solid var(--green)44;border-radius:8px;padding:20px 24px;text-align:center;margin-bottom:20px}
-.complete-banner .big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--green);letter-spacing:0.1em}
-.complete-banner p{color:var(--muted2);font-size:12px;margin-top:4px}
+/* WORKOUT FIELDS */
+.wf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.wf-label{font-size:9px;color:var(--muted);margin-bottom:3px;letter-spacing:0.06em;text-transform:uppercase}
 
-/* FAIL BANNER */
-.fail-banner{background:linear-gradient(135deg,#1f0a0a,#100505);border:1px solid var(--red)44;border-radius:8px;padding:20px 24px;text-align:center;margin-bottom:20px}
-.fail-banner .big{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--red);letter-spacing:0.1em}
+/* ── SLEEP CARD ── */
+.sleep-card{background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:14px;margin-top:14px}
+.sleep-card-title{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sleep-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sf label{display:block;font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.06em;text-transform:uppercase}
+.sf input,.sf select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:6px 8px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;outline:none;transition:border-color 0.15s}
+.sf input:focus,.sf select:focus{border-color:var(--blue)}
+.star-row{display:flex;gap:3px;margin-top:3px}
+.star{font-size:16px;cursor:pointer;color:var(--muted);transition:color 0.12s;user-select:none}
+.star.lit{color:var(--gold2)}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:20px}
-.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--gold2)}
-.stat-num.g{color:var(--green)}.stat-num.r{color:var(--red)}.stat-num.w{color:#fff}
-.stat-lbl{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);margin-top:3px}
+/* ── METRICS ── */
+.metrics-card{background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:14px;margin-top:10px}
+.metrics-card-title{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--purple);margin-bottom:10px}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mf label{display:block;font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.06em;text-transform:uppercase}
+.mf input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:6px 8px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;outline:none;transition:border-color 0.15s}
+.mf input:focus{border-color:var(--purple)}
 
-/* CALENDAR */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px}
-.cal-header{text-align:center;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:6px 0}
-.cal-day{aspect-ratio:1;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:500;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all 0.15s;position:relative}
-.cal-day:hover{border-color:var(--border2)}
-.cal-day.today{border-color:var(--gold2);color:var(--gold2)}
-.cal-day.complete{background:#0a1f10;border-color:var(--green)55;color:var(--green)}
-.cal-day.failed{background:#1f0a0a;border-color:var(--red)44;color:var(--red)}
-.cal-day.partial{background:#1a150a;border-color:var(--gold)44;color:var(--gold2)}
-.cal-day.future{opacity:0.25;cursor:default}
+/* ── PASS ROW ── */
+.pass-row{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:var(--gold-dim);border:1px solid var(--gold)33;border-radius:6px;margin-top:8px;flex-wrap:wrap;gap:8px}
+.pass-left .pl{font-size:10px;color:var(--gold2);letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+.pass-left .ps{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* ── NOTES ── */
+.notes-wrap{margin-top:12px}
+.notes-label{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:7px;margin-bottom:14px}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 8px;text-align:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1;color:var(--gold2)}
+.stat-num.g{color:var(--green)}.stat-num.r{color:var(--red)}.stat-num.b{color:var(--blue)}.stat-num.w{color:#fff}.stat-num.p{color:var(--purple)}
+.stat-lbl{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted2);margin-top:3px}
+
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px}
+.cal-hdr{text-align:center;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding:4px 0}
+.cal-day{aspect-ratio:1;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all 0.12s}
+.cal-day:hover:not(.future):not(.empty){border-color:var(--border2)}
+.cal-day.today{border-color:var(--gold2)!important;color:var(--gold2)}
+.cal-day.complete{background:#081508;border-color:var(--green)55;color:var(--green)}
+.cal-day.failed{background:#150808;border-color:var(--red)44;color:var(--red)}
+.cal-day.partial{background:#150e00;border-color:var(--gold)44;color:var(--gold2)}
+.cal-day.future{opacity:0.18;cursor:default}
 .cal-day.empty{background:transparent;border-color:transparent;cursor:default}
-.cal-day .day-num{font-size:12px;font-weight:600}
-.cal-day .day-dot{width:5px;height:5px;border-radius:50%;margin-top:2px}
-.cal-day.complete .day-dot{background:var(--green)}
-.cal-day.failed .day-dot{background:var(--red)}
-.cal-day.partial .day-dot{background:var(--gold)}
+.cal-day .cn{font-size:10px;font-weight:600}
+.cal-day .cd{width:4px;height:4px;border-radius:50%;margin-top:2px}
+.cal-day.complete .cd{background:var(--green)}
+.cal-day.failed .cd{background:var(--red)}
+.cal-day.partial .cd{background:var(--gold)}
 
-/* PROGRESS BAR */
-.prog-wrap{margin-bottom:20px}
-.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-bottom:6px;letter-spacing:0.06em}
-.prog-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;transition:width 0.5s ease}
+/* ── WORKOUT LOG ── */
+.log-item{padding:10px 13px;background:var(--surface);border:1px solid var(--border);border-radius:5px;margin-bottom:6px}
+.log-top{display:flex;justify-content:space-between;margin-bottom:4px}
+.log-date{font-size:10px;color:var(--muted2)}
+.log-day{font-size:10px;color:var(--gold2)}
+.log-body{font-size:12px;color:var(--text)}
+.log-tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
+.log-tag{font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:0.06em}
+.log-tag.type{background:var(--green-dim);color:var(--green);border:1px solid var(--green)33}
+.log-tag.time{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue)33}
+.log-tag.sleep{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple)33}
 
-/* RULES PAGE */
-.rule-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start}
-.rule-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold2);line-height:1;flex-shrink:0;width:32px}
-.rule-title{font-weight:600;font-size:13px;margin-bottom:3px;color:#fff}
-.rule-desc{font-size:12px;color:var(--muted2);line-height:1.6}
+/* ── WEEKLY REVIEW ── */
+.week-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:10px}
+.week-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.week-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.08em;color:var(--gold2)}
+.week-rate{font-size:11px;color:var(--muted2)}
+.week-days{display:flex;gap:4px;margin-bottom:8px}
+.week-dot{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--border)}
+.week-dot.c{background:var(--green-dim);border-color:var(--green)44;color:var(--green)}
+.week-dot.f{background:var(--red-dim);border-color:var(--red)44;color:var(--red)}
+.week-dot.p{background:var(--gold-dim);border-color:var(--gold)44;color:var(--gold2)}
+.week-dot.n{background:var(--surface);color:var(--muted)}
 
-/* NOTES */
-.note-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;outline:none;resize:vertical;min-height:80px}
-.note-input:focus{border-color:var(--gold)}
+/* ── RULES ── */
+.rule-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:13px 15px;margin-bottom:7px;display:flex;gap:12px;align-items:flex-start}
+.rule-num{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold2);line-height:1;flex-shrink:0;width:26px}
+.rule-title{font-weight:600;font-size:12px;margin-bottom:2px;color:#fff}
+.rule-desc{font-size:11px;color:var(--muted2);line-height:1.6}
+.alert-card{border-radius:6px;padding:13px 15px;margin-bottom:8px}
+.alert-card.red{background:var(--red-dim);border:1px solid var(--red)33}
+.alert-card.gold{background:var(--gold-dim);border:1px solid var(--gold)33}
+.alert-card .al{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;font-weight:600}
+.alert-card.red .al{color:var(--red)}
+.alert-card.gold .al{color:var(--gold2)}
+.alert-card p{font-size:11px;color:var(--muted2);line-height:1.7}
 
-/* MODAL */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
-.mb{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:28px;width:100%;max-width:420px}
-.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.mt{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.08em;color:var(--gold2)}
+/* ── MODAL ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.mb{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:24px;width:100%;max-width:400px;max-height:90vh;overflow-y:auto}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.08em;color:var(--gold2)}
+.start-task{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.start-task:last-child{border-bottom:none}
+.start-task .si{font-size:16px}
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;padding:10px 18px;border-radius:6px;font-size:12px;z-index:200;animation:fi 0.2s ease;letter-spacing:0.06em;text-transform:uppercase}
-.toast.s{background:#051008;border:1px solid var(--green)55;color:var(--green)}
-.toast.e{background:#100505;border:1px solid var(--red)55;color:var(--red)}
-.toast.w{background:#100a00;border:1px solid var(--gold)55;color:var(--gold2)}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;padding:9px 16px;border-radius:5px;font-size:11px;z-index:200;animation:fi 0.2s ease;letter-spacing:0.06em;text-transform:uppercase;max-width:280px}
+.toast.s{background:#040a04;border:1px solid var(--green)55;color:var(--green)}
+.toast.e{background:#0a0404;border:1px solid var(--red)55;color:var(--red)}
+.toast.w{background:#0a0800;border:1px solid var(--gold)55;color:var(--gold2)}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;color:var(--muted2);margin-bottom:12px}
+.empty{text-align:center;padding:36px;color:var(--muted)}
+.ei{font-size:28px;margin-bottom:8px;opacity:0.4}
 
-.empty{text-align:center;padding:40px;color:var(--muted)}
-.ei{font-size:32px;margin-bottom:10px;opacity:0.4}
-
-@media(max-width:600px){
-  header{padding:20px 16px 0}
-  .logo{font-size:32px}.streak-num{font-size:42px}
-  main{padding:16px}
-  .day-label{font-size:60px}
+@media(max-width:480px){
+  .sleep-grid,.metrics-grid{grid-template-columns:1fr 1fr}
+  .wf-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 <header>
-  <div>
-    <div class="logo">75 <span>SOLID</span></div>
-    <div class="logo-sub">Demi's Challenge — No Excuses</div>
-  </div>
-  <div class="header-right">
-    <div class="streak-big">
+  <div class="header-top">
+    <div>
+      <div class="logo">75 <span>SOLID</span></div>
+      <div class="logo-sub">Demi · No Excuses · No Reset</div>
+    </div>
+    <div class="streak-badge">
       <div class="streak-num" id="streak-display">0</div>
       <div class="streak-label">Day Streak</div>
     </div>
   </div>
+  <div id="milestone-wrap"></div>
   <nav>
     <button class="active" data-view="today" onclick="go('today',this)">Today</button>
+    <button data-view="schedule" onclick="go('schedule',this)">Schedule</button>
     <button data-view="calendar" onclick="go('calendar',this)">Calendar</button>
+    <button data-view="log" onclick="go('log',this)">Workout Log</button>
+    <button data-view="weekly" onclick="go('weekly',this)">Weekly</button>
     <button data-view="stats" onclick="go('stats',this)">Stats</button>
     <button data-view="rules" onclick="go('rules',this)">Rules</button>
   </nav>
@@ -179,38 +265,86 @@ main{position:relative;z-index:1;padding:24px;max-width:960px;margin:0 auto}
   <div id="today-content"></div>
 </div>
 
+<!-- SCHEDULE -->
+<div id="view-schedule" style="display:none">
+  <div class="stitle">Your Weekly Schedule</div>
+  <div class="schedule-card" id="schedule-card"></div>
+  <div style="margin-top:10px;padding:13px 15px;background:var(--surface);border:1px solid var(--blue)33;border-radius:6px">
+    <div style="color:var(--blue);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Morning Session Flow (Tue / Thu)</div>
+    <div style="font-size:11px;color:var(--muted2);line-height:1.9">
+      5:30am — Wake up, bathroom, change<br>
+      5:50am — Leave for gym<br>
+      6:10am — Training starts<br>
+      7:40am — Training ends (90 min)<br>
+      8:00am — Back home<br>
+      8:00–8:20am — Shower, dress, breakfast<br>
+      8:20am — Out the door ✓
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:13px 15px;background:var(--surface);border:1px solid var(--orange)33;border-radius:6px">
+    <div style="color:var(--orange);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Evening Session Flow (Mon / Wed / Fri)</div>
+    <div style="font-size:11px;color:var(--muted2);line-height:1.9">
+      6:30pm — Home from work<br>
+      6:45pm — Change, leave for gym<br>
+      7:05pm — Training starts<br>
+      8:35pm — Training ends (90 min)<br>
+      8:55pm — Back home<br>
+      9:00–9:30pm — Shower, dinner<br>
+      10:30pm — Lights out ✓
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:13px 15px;background:var(--purple-dim);border:1px solid var(--purple)33;border-radius:6px">
+    <div style="color:var(--purple);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Sunday — Recovery + Setup</div>
+    <div style="font-size:11px;color:var(--muted2);line-height:1.9">
+      Rest day — no gym<br>
+      Meal prep for Mon–Wed<br>
+      Read your 10 pages<br>
+      Hit your water<br>
+      Progress photo<br>
+      Lay out gym bag + clothes for Tue morning<br>
+      9:15pm — Lights out (5:30am tomorrow)
+    </div>
+  </div>
+</div>
+
 <!-- CALENDAR -->
 <div id="view-calendar" style="display:none">
-  <div class="section-title">75 Day Map</div>
-  <div class="prog-wrap" id="cal-progress"></div>
-  <div style="display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted2)"><div style="width:10px;height:10px;border-radius:2px;background:#0a1f10;border:1px solid var(--green)55"></div>Complete</div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted2)"><div style="width:10px;height:10px;border-radius:2px;background:#1f0a0a;border:1px solid var(--red)44"></div>Failed / Reset</div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted2)"><div style="width:10px;height:10px;border-radius:2px;background:#1a150a;border:1px solid var(--gold)44"></div>Pass Used</div>
+  <div class="stitle">75 Day Map</div>
+  <div class="pbar-wrap" id="cal-progress"></div>
+  <div style="display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted2)"><div style="width:8px;height:8px;border-radius:2px;background:#081508;border:1px solid var(--green)55"></div>Complete</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted2)"><div style="width:8px;height:8px;border-radius:2px;background:#150808;border:1px solid var(--red)44"></div>Failed</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted2)"><div style="width:8px;height:8px;border-radius:2px;background:#150e00;border:1px solid var(--gold)44"></div>Pass Used</div>
   </div>
   <div class="cal-grid" id="cal-grid"></div>
 </div>
 
+<!-- WORKOUT LOG -->
+<div id="view-log" style="display:none">
+  <div class="stitle">Workout History</div>
+  <div id="workout-log-list"></div>
+</div>
+
+<!-- WEEKLY REVIEW -->
+<div id="view-weekly" style="display:none">
+  <div class="stitle">Weekly Breakdown</div>
+  <div id="weekly-content"></div>
+</div>
+
 <!-- STATS -->
 <div id="view-stats" style="display:none">
-  <div class="section-title">Your Numbers</div>
-  <div class="stats-row" id="stats-grid"></div>
-  <div class="section-title" style="margin-top:8px">Task Completion Rate</div>
+  <div class="stitle">Your Numbers</div>
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="stitle">Task Completion Rate</div>
   <div id="task-rates"></div>
+  <div class="stitle" style="margin-top:12px">Body Metrics History</div>
+  <div id="metrics-history"></div>
 </div>
 
 <!-- RULES -->
 <div id="view-rules" style="display:none">
-  <div class="section-title">75 Solid — Your Rules</div>
+  <div class="stitle">75 Solid — Your Rules</div>
   <div id="rules-content"></div>
-  <div style="margin-top:20px;padding:16px 20px;background:var(--surface);border:1px solid var(--red)33;border-radius:6px">
-    <div style="color:var(--red);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">If You Miss a Day</div>
-    <div style="color:var(--muted2);font-size:12px;line-height:1.7">If you miss any task on a non-pass day, your streak resets to Day 1. The calendar logs it as a failed day. You start again the next day. No judgment — just restart.</div>
-  </div>
-  <div style="margin-top:10px;padding:16px 20px;background:var(--surface);border:1px solid var(--gold)33;border-radius:6px">
-    <div style="color:var(--gold2);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Social Pass Rule</div>
-    <div style="color:var(--muted2);font-size:12px;line-height:1.7">1 pass per week for diet at planned social events. Use it intentionally — not as an excuse. Pass days still require all other tasks. If you use it, own it. The streak does not reset on a pass day.</div>
-  </div>
   <div style="margin-top:20px;text-align:center">
     <button class="btn danger" onclick="confirmReset()">Reset Entire Challenge</button>
   </div>
@@ -218,476 +352,634 @@ main{position:relative;z-index:1;padding:24px;max-width:960px;margin:0 auto}
 
 </main>
 
-<!-- RESET MODAL -->
-<div class="mo" id="reset-modal" style="display:none">
-  <div class="mb">
-    <div class="mh">
-      <div class="mt">Reset Challenge?</div>
-      <button class="btn sm" onclick="closeModal()">✕</button>
-    </div>
-    <div style="color:var(--muted2);font-size:13px;line-height:1.7;margin-bottom:20px">This will erase all your progress and start fresh from Day 1. This cannot be undone.</div>
-    <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn danger" onclick="hardReset()">Yes, Reset Everything</button>
-    </div>
-  </div>
-</div>
-
 <!-- START MODAL -->
 <div class="mo" id="start-modal" style="display:none">
   <div class="mb">
-    <div class="mh"><div class="mt">Start Your Challenge</div></div>
-    <div style="color:var(--muted2);font-size:12px;line-height:1.7;margin-bottom:20px">
-      You're about to commit to 75 days of discipline. Day 1 starts today.<br><br>
-      <strong style="color:var(--text)">Your daily tasks:</strong><br>
-      💪 1 Workout (45 min minimum)<br>
-      🥗 Diet — no cheat meals<br>
-      📖 Read 10 pages<br>
-      💧 Drink 1 gallon of water<br>
-      📸 Take a progress photo<br><br>
-      <strong style="color:var(--gold2)">1 social pass per week for diet only.</strong>
+    <div class="mh"><div class="mt">Day 1 Starts Now</div></div>
+    <div style="color:var(--muted2);font-size:11px;line-height:1.7;margin-bottom:14px">You're committing to 75 days. Here's what you complete every single day:</div>
+    <div style="margin-bottom:16px">
+      <div class="start-task"><span class="si">📸</span> Progress photo — every morning</div>
+      <div class="start-task"><span class="si">💪</span> Workout — 90 min (schedule varies by day)</div>
+      <div class="start-task"><span class="si">💧</span> 1 gallon of water</div>
+      <div class="start-task"><span class="si">📖</span> Read 10 pages</div>
+      <div class="start-task"><span class="si">🥗</span> Diet — no cheat meals</div>
     </div>
-    <button class="btn primary lg" style="width:100%" onclick="startChallenge()">I'm Ready. Let's Go.</button>
+    <div style="padding:10px 13px;background:var(--gold-dim);border:1px solid var(--gold)33;border-radius:5px;margin-bottom:16px;font-size:11px;color:var(--muted2);line-height:1.6">
+      <strong style="color:var(--gold2)">1 social pass per week</strong> — diet only, for planned events. All other tasks still required. Streak does not reset on pass day.
+    </div>
+    <button class="btn primary lg" style="width:100%;text-align:center" onclick="startChallenge()">I'm Ready. Let's Go. →</button>
+  </div>
+</div>
+
+<!-- RESET MODAL -->
+<div class="mo" id="reset-modal" style="display:none">
+  <div class="mb">
+    <div class="mh"><div class="mt">Reset Challenge?</div><button class="btn sm" onclick="closeModals()">✕</button></div>
+    <div style="color:var(--muted2);font-size:12px;line-height:1.7;margin-bottom:18px">This erases all progress and starts from Day 1. Cannot be undone.</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeModals()">Cancel</button>
+      <button class="btn danger" onclick="hardReset()">Reset Everything</button>
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast" style="display:none"></div>
 
 <script>
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // DATA
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 const TASKS=[
-  {id:'workout',name:'Workout',desc:'45 minutes minimum',icon:'💪',passable:false},
-  {id:'diet',name:'Diet',desc:'No cheat meals — clean eating only',icon:'🥗',passable:true},
-  {id:'read',name:'Read 10 Pages',desc:'Any book — non-fiction recommended',icon:'📖',passable:false},
-  {id:'water',name:'Drink 1 Gallon',desc:'~3.8 liters of water throughout the day',icon:'💧',passable:false},
-  {id:'photo',name:'Progress Photo',desc:'Same angle, same lighting every day',icon:'📸',passable:false},
+  {id:'photo',name:'Progress Photo',sub:'Same angle, same lighting. Every day.',icon:'📸',passable:false,expandable:false},
+  {id:'workout',name:'Workout',sub:'90 minutes — log it below',icon:'💪',passable:false,expandable:true},
+  {id:'water',name:'1 Gallon Water',sub:'~3.8L throughout the day. Not at 9pm.',icon:'💧',passable:false,expandable:false},
+  {id:'read',name:'Read 10 Pages',sub:'Real book. Lunch break or commute.',icon:'📖',passable:false,expandable:false},
+  {id:'diet',name:'Diet — No Cheat Meals',sub:'Clean eating. Social pass available if needed.',icon:'🥗',passable:true,expandable:false},
+];
+
+const SCHEDULE=[
+  {day:'Mon',type:'Evening Gym',time:'7:05pm',bed:'10:30pm',cls:'gym-after'},
+  {day:'Tue',type:'Morning Gym',time:'6:10am',bed:'9:15pm',cls:'gym-before'},
+  {day:'Wed',type:'Evening Gym',time:'7:05pm',bed:'10:30pm',cls:'gym-after'},
+  {day:'Thu',type:'Morning Gym',time:'6:10am',bed:'9:15pm',cls:'gym-before'},
+  {day:'Fri',type:'Evening Gym',time:'7:05pm',bed:'10:30pm',cls:'gym-after'},
+  {day:'Sat',type:'Morning Gym',time:'8:00am',bed:'11:00pm',cls:'gym-before'},
+  {day:'Sun',type:'Rest + Meal Prep',time:'—',bed:'9:15pm',cls:'gym-rest'},
+];
+
+const MILESTONES=[
+  {day:1,icon:'🚀',title:'Day 1 Complete',sub:'The hardest day. You did it.'},
+  {day:7,icon:'🔥',title:'One Week Down',sub:'7 days of discipline. Most people quit here.'},
+  {day:14,icon:'⚡',title:'Two Weeks Strong',sub:'Habits are forming. Your body is starting to change.'},
+  {day:21,icon:'💎',title:'21 Days',sub:'Three weeks. The adaptation is real now.'},
+  {day:30,icon:'🏆',title:'30 Days',sub:'One month. You are not the same person who started.'},
+  {day:45,icon:'🦁',title:'Halfway',sub:'45 days. You have come too far to quit now.'},
+  {day:60,icon:'⚔️',title:'60 Days',sub:'15 days left. This is where legends are made.'},
+  {day:75,icon:'👑',title:'75 SOLID COMPLETE',sub:'You finished. Ìwà l\'ẹwà. Character is beauty.'},
 ];
 
 const RULES=[
-  {title:'1 Workout Daily',desc:'Minimum 45 minutes. Before work, lunch break, or after 6:30pm — you choose. It counts.'},
-  {title:'Diet — No Cheat Meals',desc:'Clean eating every day. You have 1 social pass per week for planned events. Use it wisely.'},
-  {title:'Read 10 Pages',desc:'Any real book. 10 pages. Every single day. No audiobooks — eyes on the page.'},
-  {title:'Drink 1 Gallon of Water',desc:'3.8 liters spread throughout the day. Coffee and tea don\'t count. Water only.'},
-  {title:'Progress Photo',desc:'Take it every day. Same spot, same angle. You\'ll want these at Day 75.'},
+  {title:'Progress Photo',desc:'Take it first thing every morning. Same spot, same angle, same lighting. You will want these at Day 75.'},
+  {title:'Workout — 90 Minutes',desc:'Follow your schedule. Morning sessions Tue/Thu/Sat. Evening sessions Mon/Wed/Fri. Sunday is rest. No skipping, no shortening.'},
+  {title:'1 Gallon of Water',desc:'3.8 liters spread through the day. Start at breakfast. Keep a bottle at your desk. Not all at once at night.'},
+  {title:'Read 10 Pages',desc:'Any real book. Non-fiction recommended. Use your lunch break or commute. No audiobooks.'},
+  {title:'Diet — No Cheat Meals',desc:'Clean eating every day. Meal prep Sunday so you\'re never caught without food. 1 social pass per week for diet at planned events — use it intentionally.'},
 ];
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // STATE
-// ══════════════════════════════════════════════════════
-let state={
+// ══════════════════════════════════════════════════════════
+let S={
   started:false,
-  startDate:null,       // ISO date string of Day 1
+  startDate:null,
   currentStreak:0,
   longestStreak:0,
-  totalDays:0,          // days completed (all tasks done)
-  days:{},              // key = ISO date, value = {tasks:{id:bool}, passUsed:bool, note:'', complete:bool, failed:bool}
+  totalComplete:0,
+  days:{},
+  // each day: {tasks:{id:bool}, passUsed:bool, note:'', complete:bool,
+  //  workout:{type:'',exercises:'',duration:'',feel:''},
+  //  sleep:{bedtime:'',wake:'',rating:0},
+  //  metrics:{weight:'',chest:'',shoulders:'',waist:'',abs:''}}
   passesUsedThisWeek:0,
   weekStartDate:null,
 };
 
-function load(){
-  const s=localStorage.getItem('75solid');
-  if(s)state=JSON.parse(s);
-}
-function save(){localStorage.setItem('75solid',JSON.stringify(state))}
+let expandedTask=null;
 
-// ══════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════
+function load(){const s=localStorage.getItem('75solid2');if(s)S=JSON.parse(s)}
+function save(){localStorage.setItem('75solid2',JSON.stringify(S))}
+
 window.addEventListener('load',()=>{
   load();
-  if(!state.started){
-    document.getElementById('start-modal').style.display='';
-  } else {
-    checkWeekReset();
-    renderAll();
-  }
+  if(!S.started){document.getElementById('start-modal').style.display=''}
+  else{checkWeekReset();renderAll();renderMilestone()}
 });
 
 function startChallenge(){
   const today=toISO(new Date());
-  state.started=true;
-  state.startDate=today;
-  state.currentStreak=0;
-  state.longestStreak=0;
-  state.totalDays=0;
-  state.days={};
-  state.passesUsedThisWeek=0;
-  state.weekStartDate=getWeekStart(new Date());
-  save();
-  closeModal();
-  renderAll();
-  showToast('Day 1 starts now. Let\'s go.','s');
+  S={started:true,startDate:today,currentStreak:0,longestStreak:0,totalComplete:0,
+    days:{},passesUsedThisWeek:0,weekStartDate:getWeekStart(new Date())};
+  save();closeModals();renderAll();renderMilestone();
+  showToast('Day 1. This is it.','s');
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // DATE UTILS
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function toISO(d){return d.toISOString().split('T')[0]}
 function todayISO(){return toISO(new Date())}
-function getWeekStart(d){const day=new Date(d);day.setDate(day.getDate()-day.getDay());return toISO(day)}
-function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/(1000*60*60*24))}
-function getDayNum(dateStr){
-  if(!state.startDate)return 0;
-  return daysBetween(state.startDate,dateStr)+1;
-}
-function formatDate(dateStr){
-  const d=new Date(dateStr+'T12:00:00');
-  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-}
+function getWeekStart(d){const x=new Date(d);x.setDate(x.getDate()-x.getDay());return toISO(x)}
+function daysBetween(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/(1000*60*60*24))}
+function getDayNum(dateStr){if(!S.startDate)return 0;return daysBetween(S.startDate,dateStr)+1}
+function todayDayNum(){return getDayNum(todayISO())}
+function formatDate(dateStr){const d=new Date(dateStr+'T12:00:00');return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}
+function getDayName(dateStr){const d=new Date(dateStr+'T12:00:00');return['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}
 
 function checkWeekReset(){
   const thisWeek=getWeekStart(new Date());
-  if(state.weekStartDate!==thisWeek){
-    state.passesUsedThisWeek=0;
-    state.weekStartDate=thisWeek;
-    save();
-  }
+  if(S.weekStartDate!==thisWeek){S.passesUsedThisWeek=0;S.weekStartDate=thisWeek;save()}
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // TODAY DATA
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function getTodayData(){
   const today=todayISO();
-  if(!state.days[today]){
-    state.days[today]={tasks:{},passUsed:false,note:'',complete:false,failed:false};
-    TASKS.forEach(t=>{state.days[today].tasks[t.id]=false});
+  if(!S.days[today]){
+    S.days[today]={
+      tasks:{},passUsed:false,note:'',complete:false,
+      workout:{type:'',exercises:'',duration:'',feel:''},
+      sleep:{bedtime:'',wake:'',rating:0},
+      metrics:{weight:'',chest:'',shoulders:'',waist:'',abs:''}
+    };
+    TASKS.forEach(t=>{S.days[today].tasks[t.id]=false});
   }
-  return state.days[today];
+  return S.days[today];
 }
 
 function toggleTask(taskId){
-  const today=todayISO();
   const d=getTodayData();
+  if(taskId==='diet'&&d.passUsed)return;
   d.tasks[taskId]=!d.tasks[taskId];
-  updateDayStatus(today);
-  save();
-  renderToday();
-  renderStreakDisplay();
+  updateDayStatus();save();renderToday();renderStreakDisplay();
 }
 
 function togglePass(){
-  const today=todayISO();
   const d=getTodayData();
-  if(!d.passUsed&&state.passesUsedThisWeek>=1){
-    showToast('Pass already used this week','w');return;
-  }
-  if(!d.passUsed){
-    d.passUsed=true;
-    d.tasks['diet']=true;
-    state.passesUsedThisWeek++;
-  } else {
-    d.passUsed=false;
-    d.tasks['diet']=false;
-    state.passesUsedThisWeek=Math.max(0,state.passesUsedThisWeek-1);
-  }
-  updateDayStatus(today);
-  save();
-  renderToday();
-  renderStreakDisplay();
+  if(!d.passUsed&&S.passesUsedThisWeek>=1){showToast('Pass already used this week','w');return}
+  if(!d.passUsed){d.passUsed=true;d.tasks['diet']=true;S.passesUsedThisWeek++}
+  else{d.passUsed=false;d.tasks['diet']=false;S.passesUsedThisWeek=Math.max(0,S.passesUsedThisWeek-1)}
+  updateDayStatus();save();renderToday();renderStreakDisplay();
 }
 
-function updateDayStatus(dateStr){
-  const d=state.days[dateStr];if(!d)return;
-  const allDone=TASKS.every(t=>d.tasks[t.id]);
-  d.complete=allDone;
-  // Recalculate streak
+function updateDayStatus(){
+  const today=todayISO();
+  const d=S.days[today];if(!d)return;
+  d.complete=TASKS.every(t=>d.tasks[t.id]);
   recalcStreak();
 }
 
 function recalcStreak(){
-  if(!state.startDate)return;
+  if(!S.startDate)return;
   const today=todayISO();
-  let streak=0;
-  let longest=0;
-  let cur=0;
-  let totalComplete=0;
-  // Walk from start to today
-  const start=new Date(state.startDate+'T12:00:00');
+  const start=new Date(S.startDate+'T12:00:00');
   const end=new Date(today+'T12:00:00');
+  let streak=0,longest=0,cur=0,total=0;
   for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
     const iso=toISO(d);
-    const day=state.days[iso];
-    if(day&&day.complete){cur++;totalComplete++}
-    else{if(cur>longest)longest=cur;cur=0}
+    const day=S.days[iso];
+    if(day&&day.complete){cur++;total++}else{if(cur>longest)longest=cur;cur=0}
   }
   if(cur>longest)longest=cur;
-  // Current streak = consecutive from today backwards
   streak=0;
   for(let d=new Date(end);d>=start;d.setDate(d.getDate()-1)){
     const iso=toISO(d);
-    const day=state.days[iso];
-    if(day&&day.complete)streak++;
-    else break;
+    const day=S.days[iso];
+    if(day&&day.complete)streak++;else break;
   }
-  state.currentStreak=streak;
-  state.longestStreak=longest;
-  state.totalDays=totalComplete;
-  save();
+  S.currentStreak=streak;S.longestStreak=longest;S.totalComplete=total;save();
 }
 
-// ══════════════════════════════════════════════════════
+function saveWorkout(field,val){const d=getTodayData();d.workout[field]=val;save()}
+function saveSleep(field,val){const d=getTodayData();d.sleep[field]=val;save()}
+function setSleepRating(n){
+  const d=getTodayData();d.sleep.rating=n;save();
+  document.querySelectorAll('.star').forEach((s,i)=>{s.classList.toggle('lit',i<n)});
+}
+function saveMetric(field,val){const d=getTodayData();d.metrics[field]=val;save()}
+function saveNote(val){const d=getTodayData();d.note=val;save()}
+
+function toggleExpand(taskId){
+  expandedTask=expandedTask===taskId?null:taskId;
+  renderToday();
+}
+
+// ══════════════════════════════════════════════════════════
 // NAVIGATION
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function go(view,btn){
   document.querySelectorAll('main>div[id^=view-]').forEach(el=>el.style.display='none');
   document.getElementById('view-'+view).style.display='';
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   if(view==='today')renderToday();
+  if(view==='schedule')renderSchedule();
   if(view==='calendar')renderCalendar();
+  if(view==='log')renderWorkoutLog();
+  if(view==='weekly')renderWeekly();
   if(view==='stats')renderStats();
   if(view==='rules')renderRules();
 }
 
-function renderAll(){
-  renderToday();
-  renderStreakDisplay();
+function renderAll(){renderToday();renderStreakDisplay()}
+function renderStreakDisplay(){document.getElementById('streak-display').textContent=S.currentStreak||0}
+
+// ══════════════════════════════════════════════════════════
+// MILESTONE
+// ══════════════════════════════════════════════════════════
+function renderMilestone(){
+  const dn=todayDayNum();
+  const m=MILESTONES.find(x=>x.day===dn);
+  const wrap=document.getElementById('milestone-wrap');
+  if(m&&S.days[todayISO()]?.complete){
+    wrap.innerHTML=`<div class="milestone"><div class="mi">${m.icon}</div><div><div class="mt2">${m.title}</div><div class="ms">${m.sub}</div></div></div>`;
+  }else{wrap.innerHTML=''}
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // RENDER TODAY
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function renderToday(){
   const today=todayISO();
   const dayNum=getDayNum(today);
   const d=getTodayData();
   const allDone=TASKS.every(t=>d.tasks[t.id]);
-  const passAvailable=state.passesUsedThisWeek<1||d.passUsed;
   const doneCount=TASKS.filter(t=>d.tasks[t.id]).length;
+  const passAvail=S.passesUsedThisWeek<1||d.passUsed;
+  const dayName=getDayName(today);
+  const schedInfo=SCHEDULE.find(s=>s.day===dayName)||{};
+  const isSunday=dayName==='Sun';
 
   let html='';
 
-  // Progress bar
-  const pct=Math.round((doneCount/TASKS.length)*100);
-  html+=`<div class="prog-wrap" style="margin-bottom:16px">
-    <div class="prog-label"><span>${doneCount} of ${TASKS.length} tasks</span><span>${pct}%</span></div>
-    <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-  </div>`;
-
-  if(allDone){
-    html+=`<div class="complete-banner">
-      <div class="big">DAY ${dayNum} COMPLETE</div>
-      <p>All tasks done. This is who you're becoming.</p>
+  // Sunday banner
+  if(isSunday){
+    html+=`<div class="sunday-banner">
+      <div class="st">🟣 Sunday Setup Day</div>
+      <p>Rest day — no gym required. Meal prep, read your pages, hit your water, take your photo.<br>
+      <strong style="color:var(--text)">Pack your gym bag + lay out clothes for Tuesday's 5:30am.</strong><br>
+      Bedtime tonight: <strong style="color:var(--purple)">9:15pm</strong></p>
     </div>`;
   }
 
-  // Hero card
-  html+=`<div class="today-hero">
-    <div class="day-label">${dayNum}</div>
-    <div class="today-top">
-      <div>
-        <div class="today-date">${formatDate(today)}</div>
-        <div class="today-title">Day ${dayNum} of 75</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2)">Current Streak</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold2);line-height:1">${state.currentStreak}</div>
-      </div>
+  // Progress
+  const pct=Math.round((doneCount/TASKS.length)*100);
+  html+=`<div class="pbar-wrap">
+    <div class="pbar-label"><span>${doneCount} / ${TASKS.length} tasks</span><span>${pct}%</span></div>
+    <div class="pbar"><div class="pbar-fill gold" style="width:${pct}%"></div></div>
+  </div>`;
+
+  // Complete banner
+  if(allDone){
+    html+=`<div class="complete-banner">
+      <div class="big">DAY ${dayNum} DONE</div>
+      <p>All tasks complete. This is discipline.</p>
+    </div>`;
+    renderMilestone();
+  }
+
+  // Header
+  html+=`<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <div>
+      <div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2)">${formatDate(today)}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-top:2px">Day ${dayNum} of 75</div>
     </div>
-    <div class="tasks">
-      ${TASKS.map(t=>{
-        const done=d.tasks[t.id];
-        const isPass=t.id==='diet'&&d.passUsed;
-        return`<div class="task ${done?(isPass?'pass-used':'done'):''}" onclick="${t.id==='diet'&&isPass?'togglePass()':'toggleTask(\''+t.id+'\')'}">
-          <div class="task-check">${done?(isPass?'P':'✓'):''}</div>
-          <div class="task-info">
-            <div class="task-name">${t.name}${isPass?' <span style="font-size:10px;color:var(--gold)">(PASS)</span>':''}</div>
-            <div class="task-desc">${t.desc}</div>
-          </div>
-          <div class="task-icon">${t.icon}</div>
-        </div>`;
-      }).join('')}
+    <div style="text-align:right">
+      ${schedInfo.type?`<div style="font-size:10px;color:${schedInfo.cls==='gym-before'?'var(--green)':schedInfo.cls==='gym-after'?'var(--orange)':'var(--muted2)'}">${schedInfo.type}</div>`:''}
+      ${schedInfo.bed?`<div style="font-size:10px;color:var(--blue);margin-top:2px">Bedtime: ${schedInfo.bed}</div>`:''}
     </div>
-    <div class="pass-row" style="margin-top:12px">
-      <div>
-        <div class="pass-label">WEEKLY SOCIAL PASS</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px">${d.passUsed?'Used today':'Diet task only · does not reset streak'}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="pass-dots">
-          <div class="pass-dot ${state.passesUsedThisWeek>=1&&!d.passUsed?'used':''}"></div>
+  </div>`;
+
+  // Tasks
+  html+=`<div class="tasks">`;
+  TASKS.forEach(t=>{
+    const done=d.tasks[t.id];
+    const isPass=t.id==='diet'&&d.passUsed;
+    const isExpanded=expandedTask===t.id;
+    html+=`<div class="task-wrap">
+      <div class="task ${done?(isPass?'pass-used':'done'):''}" onclick="toggleTask('${t.id}')">
+        <div class="chk">${done?(isPass?'P':'✓'):''}</div>
+        <div class="task-info">
+          <div class="task-name">${t.name}${isPass?' <span style="font-size:9px;color:var(--gold)">(pass)</span>':''}</div>
+          <div class="task-sub">${t.sub}</div>
         </div>
-        <button class="btn sm ${d.passUsed?'danger':''}" onclick="togglePass()" ${!passAvailable&&!d.passUsed?'disabled':''}>
-          ${d.passUsed?'Remove Pass':'Use Pass'}
-        </button>
+        <div class="task-icon">${t.icon}</div>
+        ${t.expandable?`<button class="task-expand-btn" onclick="event.stopPropagation();toggleExpand('${t.id}')">${isExpanded?'▲':'▼'}</button>`:''}
+      </div>
+      ${t.id==='workout'&&isExpanded?renderWorkoutExpand(d):''}
+    </div>`;
+  });
+  html+=`</div>`;
+
+  // Pass row
+  html+=`<div class="pass-row">
+    <div class="pass-left">
+      <div class="pl">Weekly Social Pass</div>
+      <div class="ps">${d.passUsed?'Used today — diet task covered':'Diet only · streak stays intact'}</div>
+    </div>
+    <button class="btn sm ${d.passUsed?'danger':''}" onclick="togglePass()" ${!passAvail&&!d.passUsed?'disabled style="opacity:0.4"':''}>
+      ${d.passUsed?'Remove Pass':'Use Pass'}
+    </button>
+  </div>`;
+
+  // Sleep tracking
+  const slp=d.sleep||{};
+  html+=`<div class="sleep-card">
+    <div class="sleep-card-title">🌙 Sleep Log</div>
+    <div class="sleep-grid">
+      <div class="sf"><label>Bedtime</label><input type="time" value="${slp.bedtime||''}" onchange="saveSleep('bedtime',this.value)" class="inp" style="background:var(--bg)"/></div>
+      <div class="sf"><label>Wake Time</label><input type="time" value="${slp.wake||''}" onchange="saveSleep('wake',this.value)" class="inp" style="background:var(--bg)"/></div>
+      <div class="sf"><label>Sleep Quality</label>
+        <div class="star-row" id="stars">
+          ${[1,2,3,4,5].map(n=>`<span class="star ${(slp.rating||0)>=n?'lit':''}" onclick="setSleepRating(${n})">★</span>`).join('')}
+        </div>
       </div>
     </div>
   </div>`;
 
-  // Notes
-  const note=d.note||'';
-  html+=`<div style="margin-top:16px">
-    <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px">Daily Note / Log</div>
-    <textarea class="note-input" placeholder="Log your workout, how you felt, what you ate, wins, struggles..." onchange="saveNote(this.value)">${note}</textarea>
+  // Body metrics
+  const m=d.metrics||{};
+  html+=`<div class="metrics-card">
+    <div class="metrics-card-title">📏 Body Metrics (optional)</div>
+    <div class="metrics-grid">
+      <div class="mf"><label>Weight (lbs)</label><input type="number" step="0.1" value="${m.weight||''}" onchange="saveMetric('weight',this.value)" class="inp" style="background:var(--bg)" placeholder="—"/></div>
+      <div class="mf"><label>Chest (in)</label><input type="number" step="0.25" value="${m.chest||''}" onchange="saveMetric('chest',this.value)" class="inp" style="background:var(--bg)" placeholder="—"/></div>
+      <div class="mf"><label>Shoulders (in)</label><input type="number" step="0.25" value="${m.shoulders||''}" onchange="saveMetric('shoulders',this.value)" class="inp" style="background:var(--bg)" placeholder="—"/></div>
+      <div class="mf"><label>Waist (in)</label><input type="number" step="0.25" value="${m.waist||''}" onchange="saveMetric('waist',this.value)" class="inp" style="background:var(--bg)" placeholder="—"/></div>
+      <div class="mf"><label>Abs / Navel (in)</label><input type="number" step="0.25" value="${m.abs||''}" onchange="saveMetric('abs',this.value)" class="inp" style="background:var(--bg)" placeholder="—"/></div>
+    </div>
+  </div>`;
+
+  // Daily note
+  html+=`<div class="notes-wrap">
+    <div class="notes-label">Daily Notes</div>
+    <textarea class="inp" style="background:var(--surface);min-height:70px" placeholder="How you felt, what you ate, wins, struggles, anything..." onchange="saveNote(this.value)">${d.note||''}</textarea>
   </div>`;
 
   document.getElementById('today-content').innerHTML=html;
 }
 
-function saveNote(val){
-  const today=todayISO();
-  const d=getTodayData();
-  d.note=val;
-  save();
-}
-
-function renderStreakDisplay(){
-  document.getElementById('streak-display').textContent=state.currentStreak||0;
-}
-
-// ══════════════════════════════════════════════════════
-// RENDER CALENDAR
-// ══════════════════════════════════════════════════════
-function renderCalendar(){
-  if(!state.startDate)return;
-  const start=new Date(state.startDate+'T12:00:00');
-  const today=todayISO();
-
-  // Progress bar
-  const daysPassed=Math.min(getDayNum(today),75);
-  const pct=Math.round((state.totalDays/75)*100);
-  document.getElementById('cal-progress').innerHTML=`
-    <div class="prog-label"><span>Day ${Math.max(getDayNum(today),1)} of 75</span><span>${state.totalDays} complete · ${pct}%</span></div>
-    <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-  `;
-
-  // Build 75-day grid
-  let html='';
-  ['SUN','MON','TUE','WED','THU','FRI','SAT'].forEach(d=>{
-    html+=`<div class="cal-header">${d}</div>`;
-  });
-
-  // Find first sunday before start
-  const gridStart=new Date(start);
-  gridStart.setDate(gridStart.getDate()-gridStart.getDay());
-
-  // 75 days end
-  const endDate=new Date(start);
-  endDate.setDate(endDate.getDate()+74);
-
-  // Fill grid to cover 75 days in 7-col layout
-  const totalCells=Math.ceil((daysBetween(toISO(gridStart),toISO(endDate))+1)/7)*7;
-
-  for(let i=0;i<totalCells;i++){
-    const d=new Date(gridStart);
-    d.setDate(d.getDate()+i);
-    const iso=toISO(d);
-    const dayNum=getDayNum(iso);
-
-    if(dayNum<1||dayNum>75){
-      html+=`<div class="cal-day empty"></div>`;continue;
-    }
-
-    const dayData=state.days[iso];
-    const isToday=iso===today;
-    const isFuture=iso>today;
-    const isComplete=dayData&&dayData.complete;
-    const isPassDay=dayData&&dayData.passUsed;
-    const isFailed=!isFuture&&!isComplete&&iso<today;
-
-    let cls='cal-day';
-    if(isToday)cls+=' today';
-    else if(isComplete)cls+=isPassDay?' partial':' complete';
-    else if(isFailed)cls+=' failed';
-    else if(isFuture)cls+=' future';
-
-    html+=`<div class="${cls}" onclick="calClick('${iso}')">
-      <div class="day-num">${dayNum}</div>
-      ${!isFuture?`<div class="day-dot"></div>`:''}
-    </div>`;
-  }
-
-  document.getElementById('cal-grid').innerHTML=html;
-}
-
-function calClick(iso){
-  const today=todayISO();
-  if(iso>today)return;
-  const d=state.days[iso];
-  if(!d)return;
-  const dayNum=getDayNum(iso);
-  const doneCount=TASKS.filter(t=>d.tasks[t.id]).length;
-  const note=d.note?`\n\n📝 ${d.note}`:'';
-  showToast(`Day ${dayNum} · ${formatDate(iso)} · ${doneCount}/5 tasks${d.passUsed?' · Pass used':''}${note.slice(0,60)}`,'w');
-}
-
-// ══════════════════════════════════════════════════════
-// RENDER STATS
-// ══════════════════════════════════════════════════════
-function renderStats(){
-  const today=todayISO();
-  const dayNum=Math.max(getDayNum(today),1);
-  const daysLogged=Object.keys(state.days).length;
-  const completeDays=Object.values(state.days).filter(d=>d.complete).length;
-  const passDays=Object.values(state.days).filter(d=>d.passUsed).length;
-  const failDays=daysLogged-completeDays;
-  const completionRate=daysLogged>0?Math.round(completeDays/daysLogged*100):0;
-  const daysLeft=Math.max(75-(getDayNum(today)-1),0);
-
-  document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-box"><div class="stat-num w">${getDayNum(today)}</div><div class="stat-lbl">Current Day</div></div>
-    <div class="stat-box"><div class="stat-num" style="color:var(--gold2)">${state.currentStreak}</div><div class="stat-lbl">Streak</div></div>
-    <div class="stat-box"><div class="stat-num g">${completeDays}</div><div class="stat-lbl">Days Done</div></div>
-    <div class="stat-box"><div class="stat-num r">${failDays}</div><div class="stat-lbl">Days Failed</div></div>
-    <div class="stat-box"><div class="stat-num">${state.longestStreak}</div><div class="stat-lbl">Best Streak</div></div>
-    <div class="stat-box"><div class="stat-num">${passDays}</div><div class="stat-lbl">Passes Used</div></div>
-    <div class="stat-box"><div class="stat-num">${completionRate}%</div><div class="stat-lbl">Completion</div></div>
-    <div class="stat-box"><div class="stat-num" style="color:var(--blue)">${daysLeft}</div><div class="stat-lbl">Days Left</div></div>
-  `;
-
-  // Task rates
-  let taskHtml='';
-  TASKS.forEach(t=>{
-    const daysWithTask=Object.values(state.days).filter(d=>d.tasks[t.id]).length;
-    const total=Math.max(daysLogged,1);
-    const rate=Math.round(daysWithTask/total*100);
-    taskHtml+=`<div style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-bottom:4px">
-        <span>${t.icon} ${t.name}</span><span>${rate}% (${daysWithTask}/${total})</span>
+function renderWorkoutExpand(d){
+  const w=d.workout||{};
+  return`<div class="task-detail">
+    <div class="wf-grid">
+      <div><div class="wf-label">Session Type</div>
+        <select class="inp" style="background:var(--bg)" onchange="saveWorkout('type',this.value)">
+          <option value="">Select...</option>
+          ${['Push (Chest/Shoulders/Tris)','Pull (Back/Biceps)','Legs','Upper Body','Full Body','Cardio','Accessory Work'].map(x=>`<option ${w.type===x?'selected':''}>${x}</option>`).join('')}
+        </select>
       </div>
-      <div class="prog-bar"><div class="prog-fill" style="width:${rate}%;background:${rate>=80?'var(--green)':rate>=50?'var(--gold)':'var(--red)'}"></div></div>
-    </div>`;
-  });
-  document.getElementById('task-rates').innerHTML=taskHtml||`<div class="empty"><div class="ei">📊</div><p>Complete some days to see stats.</p></div>`;
+      <div><div class="wf-label">Duration (min)</div>
+        <input type="number" class="inp" style="background:var(--bg)" value="${w.duration||''}" placeholder="90" onchange="saveWorkout('duration',this.value)"/>
+      </div>
+    </div>
+    <div style="margin-bottom:8px"><div class="wf-label">Exercises / Notes</div>
+      <textarea class="inp" style="background:var(--bg);min-height:60px" placeholder="e.g. Incline bench 4x8, shoulder press 4x10, lateral raises..." onchange="saveWorkout('exercises',this.value)">${w.exercises||''}</textarea>
+    </div>
+    <div><div class="wf-label">How did it feel?</div>
+      <select class="inp" style="background:var(--bg)" onchange="saveWorkout('feel',this.value)">
+        <option value="">Rate it...</option>
+        ${['🔥 Crushed it','💪 Solid session','😐 Average','😴 Low energy but showed up','❌ Struggled'].map(x=>`<option ${w.feel===x?'selected':''}>${x}</option>`).join('')}
+      </select>
+    </div>
+  </div>`;
 }
 
-// ══════════════════════════════════════════════════════
-// RENDER RULES
-// ══════════════════════════════════════════════════════
-function renderRules(){
-  document.getElementById('rules-content').innerHTML=RULES.map((r,i)=>`
-    <div class="rule-card">
-      <div class="rule-num">${i+1}</div>
-      <div>
-        <div class="rule-title">${r.title}</div>
-        <div class="rule-desc">${r.desc}</div>
-      </div>
+// ══════════════════════════════════════════════════════════
+// SCHEDULE
+// ══════════════════════════════════════════════════════════
+function renderSchedule(){
+  const todayName=getDayName(todayISO());
+  document.getElementById('schedule-card').innerHTML=SCHEDULE.map(s=>`
+    <div class="schedule-day">
+      <div class="sday-name ${s.day===todayName?'today-day':''}">${s.day}</div>
+      <div class="sday-type ${s.cls}">${s.type}</div>
+      <div class="sday-time">${s.time}</div>
+      <div class="sday-bed">🌙 ${s.bed}</div>
     </div>
   `).join('');
 }
 
-// ══════════════════════════════════════════════════════
-// RESET
-// ══════════════════════════════════════════════════════
-function confirmReset(){document.getElementById('reset-modal').style.display=''}
-function closeModal(){document.querySelectorAll('.mo').forEach(m=>m.style.display='none')}
-function hardReset(){
-  state={started:false,startDate:null,currentStreak:0,longestStreak:0,totalDays:0,days:{},passesUsedThisWeek:0,weekStartDate:null};
-  save();closeModal();
-  document.getElementById('start-modal').style.display='';
+// ══════════════════════════════════════════════════════════
+// CALENDAR
+// ══════════════════════════════════════════════════════════
+function renderCalendar(){
+  if(!S.startDate)return;
+  const today=todayISO();
+  const total=S.totalComplete;
+  const pct=Math.round((total/75)*100);
+  document.getElementById('cal-progress').innerHTML=`
+    <div class="pbar-label"><span>Day ${todayDayNum()} of 75 · ${total} complete</span><span>${pct}%</span></div>
+    <div class="pbar"><div class="pbar-fill gold" style="width:${pct}%"></div></div>
+  `;
+
+  const start=new Date(S.startDate+'T12:00:00');
+  const gridStart=new Date(start);
+  gridStart.setDate(gridStart.getDate()-gridStart.getDay());
+  const endDate=new Date(start);endDate.setDate(endDate.getDate()+74);
+  const totalCells=Math.ceil((daysBetween(toISO(gridStart),toISO(endDate))+1)/7)*7;
+
+  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-hdr">${d}</div>`).join('');
+
+  for(let i=0;i<totalCells;i++){
+    const d=new Date(gridStart);d.setDate(d.getDate()+i);
+    const iso=toISO(d);
+    const dn=getDayNum(iso);
+    if(dn<1||dn>75){html+=`<div class="cal-day empty"></div>`;continue}
+    const dd=S.days[iso];
+    const isToday=iso===today;
+    const isFuture=iso>today;
+    const isComplete=dd&&dd.complete;
+    const isPass=dd&&dd.passUsed;
+    const isFailed=!isFuture&&!isComplete&&iso<today;
+    let cls='cal-day';
+    if(isToday)cls+=' today';
+    else if(isComplete)cls+=isPass?' partial':' complete';
+    else if(isFailed)cls+=' failed';
+    else if(isFuture)cls+=' future';
+    html+=`<div class="${cls}" onclick="calTap('${iso}')">
+      <div class="cn">${dn}</div>
+      ${!isFuture?`<div class="cd"></div>`:''}
+    </div>`;
+  }
+  document.getElementById('cal-grid').innerHTML=html;
 }
 
-// ══════════════════════════════════════════════════════
+function calTap(iso){
+  if(iso>todayISO())return;
+  const dd=S.days[iso];
+  if(!dd)return;
+  const dn=getDayNum(iso);
+  const done=TASKS.filter(t=>dd.tasks[t.id]).length;
+  showToast(`Day ${dn} · ${formatDate(iso)} · ${done}/5 tasks${dd.passUsed?' · Pass used':''}${dd.workout?.type?' · '+dd.workout.type:''}`, 'w');
+}
+
+// ══════════════════════════════════════════════════════════
+// WORKOUT LOG
+// ══════════════════════════════════════════════════════════
+function renderWorkoutLog(){
+  const entries=Object.entries(S.days)
+    .filter(([,d])=>d.tasks?.workout&&d.workout?.exercises)
+    .sort(([a],[b])=>b.localeCompare(a));
+
+  if(!entries.length){
+    document.getElementById('workout-log-list').innerHTML=`<div class="empty"><div class="ei">💪</div><p>No workouts logged yet. Tap ▼ on the Workout task to log your session.</p></div>`;
+    return;
+  }
+
+  document.getElementById('workout-log-list').innerHTML=entries.map(([iso,d])=>{
+    const dn=getDayNum(iso);
+    const w=d.workout;
+    const slp=d.sleep;
+    return`<div class="log-item">
+      <div class="log-top">
+        <div class="log-date">${formatDate(iso)}</div>
+        <div class="log-day">Day ${dn}</div>
+      </div>
+      ${w.exercises?`<div class="log-body">${w.exercises}</div>`:''}
+      <div class="log-tags">
+        ${w.type?`<span class="log-tag type">${w.type}</span>`:''}
+        ${w.duration?`<span class="log-tag time">${w.duration} min</span>`:''}
+        ${w.feel?`<span class="log-tag type">${w.feel}</span>`:''}
+        ${slp?.rating?`<span class="log-tag sleep">Sleep ★${slp.rating}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+// WEEKLY REVIEW
+// ══════════════════════════════════════════════════════════
+function renderWeekly(){
+  if(!S.startDate){document.getElementById('weekly-content').innerHTML=`<div class="empty"><div class="ei">📅</div><p>Start the challenge first.</p></div>`;return}
+  const today=todayISO();
+  const start=new Date(S.startDate+'T12:00:00');
+  const totalDays=daysBetween(S.startDate,today)+1;
+  const totalWeeks=Math.ceil(totalDays/7);
+  let html='';
+
+  for(let w=0;w<totalWeeks;w++){
+    const weekStart=new Date(start);weekStart.setDate(weekStart.getDate()+w*7);
+    const weekDays=[];
+    for(let d=0;d<7;d++){
+      const day=new Date(weekStart);day.setDate(day.getDate()+d);
+      const iso=toISO(day);
+      const dn=getDayNum(iso);
+      if(dn<1||dn>75)continue;
+      weekDays.push({iso,dn,data:S.days[iso]||null});
+    }
+    if(!weekDays.length)continue;
+    const complete=weekDays.filter(x=>x.data?.complete).length;
+    const passed=weekDays.filter(x=>x.data?.passUsed).length;
+    const rate=weekDays.length>0?Math.round(complete/weekDays.length*100):0;
+
+    html+=`<div class="week-card">
+      <div class="week-hdr">
+        <div class="week-title">Week ${w+1}</div>
+        <div class="week-rate">${complete}/${weekDays.length} complete${passed?' · '+passed+' pass':''}</div>
+      </div>
+      <div class="week-days">
+        ${weekDays.map(x=>{
+          const isFuture=x.iso>today;
+          const cls=isFuture?'n':x.data?.complete?(x.data?.passUsed?'p':'c'):(x.iso<today?'f':'n');
+          return`<div class="week-dot ${cls}" title="Day ${x.dn}">${getDayName(x.iso).slice(0,1)}</div>`;
+        }).join('')}
+      </div>
+      <div class="pbar"><div class="pbar-fill ${rate>=80?'green':rate>=50?'gold':'red'}" style="width:${rate}%"></div></div>
+    </div>`;
+  }
+  document.getElementById('weekly-content').innerHTML=html||`<div class="empty"><div class="ei">📅</div><p>Complete some days to see weekly breakdown.</p></div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════════════════════
+function renderStats(){
+  const today=todayISO();
+  const dn=todayDayNum();
+  const logged=Object.keys(S.days).length;
+  const complete=Object.values(S.days).filter(d=>d.complete).length;
+  const passes=Object.values(S.days).filter(d=>d.passUsed).length;
+  const failed=Math.max(0,logged-complete);
+  const rate=logged>0?Math.round(complete/logged*100):0;
+  const left=Math.max(0,75-(dn-1));
+  const avgSleep=()=>{
+    const rated=Object.values(S.days).filter(d=>d.sleep?.rating>0);
+    if(!rated.length)return'—';
+    return(rated.reduce((s,d)=>s+d.sleep.rating,0)/rated.length).toFixed(1);
+  };
+
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-box"><div class="stat-num w">${dn}</div><div class="stat-lbl">Current Day</div></div>
+    <div class="stat-box"><div class="stat-num">${S.currentStreak}</div><div class="stat-lbl">Streak</div></div>
+    <div class="stat-box"><div class="stat-num g">${complete}</div><div class="stat-lbl">Done</div></div>
+    <div class="stat-box"><div class="stat-num r">${failed}</div><div class="stat-lbl">Failed</div></div>
+    <div class="stat-box"><div class="stat-num">${S.longestStreak}</div><div class="stat-lbl">Best Streak</div></div>
+    <div class="stat-box"><div class="stat-num">${passes}</div><div class="stat-lbl">Passes</div></div>
+    <div class="stat-box"><div class="stat-num">${rate}%</div><div class="stat-lbl">Rate</div></div>
+    <div class="stat-box"><div class="stat-num b">${left}</div><div class="stat-lbl">Days Left</div></div>
+    <div class="stat-box"><div class="stat-num p">${avgSleep()}</div><div class="stat-lbl">Avg Sleep ★</div></div>
+  `;
+
+  let taskHtml='';
+  TASKS.forEach(t=>{
+    const done=Object.values(S.days).filter(d=>d.tasks[t.id]).length;
+    const total=Math.max(logged,1);
+    const r=Math.round(done/total*100);
+    taskHtml+=`<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted2);margin-bottom:4px">
+        <span>${t.icon} ${t.name}</span><span>${r}% (${done}/${total})</span>
+      </div>
+      <div class="pbar"><div class="pbar-fill ${r>=80?'green':r>=50?'gold':'red'}" style="width:${r}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('task-rates').innerHTML=taskHtml;
+
+  // Metrics history
+  const mEntries=Object.entries(S.days)
+    .filter(([,d])=>d.metrics?.weight)
+    .sort(([a],[b])=>b.localeCompare(a)).slice(0,10);
+  document.getElementById('metrics-history').innerHTML=mEntries.length?
+    mEntries.map(([iso,d])=>{
+      const m=d.metrics;
+      return`<div class="log-item" style="margin-bottom:6px">
+        <div class="log-top"><div class="log-date">${formatDate(iso)}</div><div class="log-day">Day ${getDayNum(iso)}</div></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:11px;color:var(--muted2)">
+          ${m.weight?`<span>⚖️ ${m.weight}lbs</span>`:''}
+          ${m.shoulders?`<span>💪 Shoulders: ${m.shoulders}"</span>`:''}
+          ${m.chest?`<span>Chest: ${m.chest}"</span>`:''}
+          ${m.waist?`<span>Waist: ${m.waist}"</span>`:''}
+          ${m.abs?`<span>Abs: ${m.abs}"</span>`:''}
+        </div>
+      </div>`;
+    }).join(''):`<div style="color:var(--muted);font-size:11px;padding:8px 0">Log your weight and measurements on Today tab to track progress.</div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// RULES
+// ══════════════════════════════════════════════════════════
+function renderRules(){
+  document.getElementById('rules-content').innerHTML=
+    RULES.map((r,i)=>`<div class="rule-card"><div class="rule-num">${i+1}</div><div><div class="rule-title">${r.title}</div><div class="rule-desc">${r.desc}</div></div></div>`).join('')+
+    `<div class="alert-card red">
+      <div class="al">If You Miss a Day</div>
+      <p>Miss any task on a non-pass day and the streak resets to 0. You start Day 1 again the next day. No negotiating, no exceptions. The restart is the discipline.</p>
+    </div>
+    <div class="alert-card gold">
+      <div class="al">The Sleep Rule</div>
+      <p>Tuesday and Thursday nights: lights out by 9:15pm. You have a 5:30am wake-up. This is non-negotiable. Every late night is a stolen workout.<br><br>
+      Monday, Wednesday, Friday nights: 10:30pm latest. Sunday nights: 9:15pm (Monday starts Tuesday morning).</p>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════════════════
+function confirmReset(){document.getElementById('reset-modal').style.display=''}
+function closeModals(){document.querySelectorAll('.mo').forEach(m=>m.style.display='none')}
+function hardReset(){
+  S={started:false,startDate:null,currentStreak:0,longestStreak:0,totalComplete:0,days:{},passesUsedThisWeek:0,weekStartDate:null};
+  save();closeModals();document.getElementById('start-modal').style.display='';
+}
+
+// ══════════════════════════════════════════════════════════
 // UTILS
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function showToast(msg,type='s'){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast '+type;t.style.display='';
-  setTimeout(()=>t.style.display='none',3000);
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>t.style.display='none',3200);
 }
 </script>
 </body>
