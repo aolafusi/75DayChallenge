@@ -466,7 +466,7 @@ function startChallenge(){
 // ══════════════════════════════════════════════════════════
 // DATE UTILS
 // ══════════════════════════════════════════════════════════
-function toISO(d){return d.toISOString().split('T')[0]}
+function toISO(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${day}`}
 function todayISO(){return toISO(new Date())}
 function getWeekStart(d){const x=new Date(d);x.setDate(x.getDate()-x.getDay());return toISO(x)}
 function daysBetween(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/(1000*60*60*24))}
